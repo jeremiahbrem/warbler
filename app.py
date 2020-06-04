@@ -190,6 +190,24 @@ def users_likes(user_id):
 
     return render_template('users/likes.html', user=user, messages=user.likes)
 
+@app.route('/users/add_like/<int:message_id>', methods=["POST"]) 
+def add_like(message_id):
+    """Adds message like to user likes"""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    message = Message.query.get(message_id)
+    if message in g.user.likes:
+        g.user.likes.remove(message)
+    else:
+        g.user.likes.append(message)
+    db.session.commit()    
+    page = request.form.get("page")        
+
+    return redirect(f"{page}")    
+
 @app.route('/users/follow/<int:follow_id>', methods=['POST'])
 def add_follow(follow_id):
     """Add a follow for the currently-logged-in user."""
@@ -261,25 +279,7 @@ def delete_user():
     db.session.delete(g.user)
     db.session.commit()
 
-    return redirect("/signup")
-
-@app.route('/users/add_like/<int:message_id>', methods=["POST"]) 
-def add_like(message_id):
-    """Adds message like to user likes"""
-
-    if not g.user:
-        flash("Access unauthorized.", "danger")
-        return redirect("/")
-
-    message = Message.query.get(message_id)
-    if message in g.user.likes:
-        g.user.likes.remove(message)
-    else:
-        g.user.likes.append(message)
-    db.session.commit()    
-    page = request.form.get("page")        
-
-    return redirect(f"{page}")    
+    return redirect("/signup")    
 
 ##############################################################################
 # Messages routes:

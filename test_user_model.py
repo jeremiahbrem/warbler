@@ -151,6 +151,9 @@ class UserModelTestCase(TestCase):
         db.session.commit()
         self.assertIsInstance(user, User)
 
+    def test_invalid_signup(self):
+        """Testing Invalid user signup"""
+
         with self.assertRaises(IntegrityError):
             user = User.signup(
                 username="",
