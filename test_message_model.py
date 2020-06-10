@@ -4,10 +4,9 @@ from models import db, User, Message, Follows
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 
-os.environ['DATABASE_URL'] = "postgresql:///warbler-test"
+os.environ['DATABASE_URL'] = "postgresql:///warbler_test"
 
 from app import app
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///warbler_test'
 
 db.create_all()
 

@@ -5,13 +5,13 @@ from unittest import TestCase
 
 from models import db, connect_db, Message, User
 
-# os.environ['DATABASE_URL'] = "postgresql:///warbler-test"
+os.environ['DATABASE_URL'] = "postgresql:///warbler_test"
 
 
 # Now we can import app
 
 from app import app, CURR_USER_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///warbler_test'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///warbler_test'
 
 db.create_all()
 

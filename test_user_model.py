@@ -5,7 +5,7 @@ from unittest import TestCase
 from models import db, User, Message, Follows
 from sqlalchemy.exc import IntegrityError
 
-os.environ['DATABASE_URL'] = "postgresql:///warbler-test"
+os.environ['DATABASE_URL'] = "postgresql:///warbler_test"
 
 from app import app
 
@@ -156,8 +156,8 @@ class UserModelTestCase(TestCase):
 
         with self.assertRaises(IntegrityError):
             user = User.signup(
-                username="",
-                email="test@test.com",
+                username=None,
+                email="test2@test.com",
                 password="testpassword",
                 image_url="http://test.jpg"
                 )   
@@ -177,7 +177,7 @@ class UserModelTestCase(TestCase):
         self.assertIsInstance(user, User)
         
         user2 = User.authenticate("tsgvsett", "testpassword")
-        self.assertIs(user2)
+        self.assertNotIsInstance(user2, User)
 
         user3 = User.authenticate("testuser", "sdfdsafdsg")
         self.assertFalse(user3)    
